@@ -13,7 +13,7 @@
       
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.0">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.5">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.b5d04df8.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.63b94e9e.min.css">
       
       
     
@@ -419,6 +419,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    基于类的中间件
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -586,6 +593,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    基于类的中间件
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -618,7 +632,7 @@
 <p>编写一个 HTTP 中间件十分简单，就像编写一个装饰器函数一样。</p>
 <p>第一层函数只有一个参数，就是被包裹的可调用对象。第二层函数仅接受一个参数 <code>requesst</code>，函数返回值将作为此次请求的响应结果。</p>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">middleware</span><span class="p">(</span><span class="n">endpoint</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
         <span class="o">...</span>
         <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="n">endpoint</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
         <span class="o">...</span>
@@ -647,7 +661,7 @@
 <p class="admonition-title">Notice</p>
 <p>以上函数无论你以何种方式定义，都会在加载时被改造成异步函数，但为了减少不必要的损耗，尽量使用 <code>async def</code> 去定义它们——除非在其中使用了含有阻塞 IO 的其他函数，例如 Django ORM, PonyORM 等。</p>
 </div>
-<p>很多时候，对于同一个父 URI，需要有多个中间件去处理。通过指定 <code>Middleware</code> 中的 <code>mounts</code> 属性，可以为中间件指定子中间件。执行时会先执行父中间件，再执行子中间件。</p>
+<p>通过指定 <code>Middleware</code> 中的 <code>mounts</code> 属性，可以为中间件指定子中间件。执行时会先执行父中间件，再执行子中间件。</p>
 <div class="admonition notice">
 <p class="admonition-title">Notice</p>
 <p>子中间件的执行顺序是从左到右。</p>
@@ -680,12 +694,27 @@
 <h3 id="_3">基于函数的中间件</h3>
 <p>编写一个 WebSocket 中间件与编写一个 HTTP 中间件很相似，不同的是 <code>websocket</code> 对应的 <code>endpoint</code> 对象不会有返回值。中间件的第二层函数也不需要返回结果，任何返回结果都是无效的。</p>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">middleware</span><span class="p">(</span><span class="n">endpoint</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
         <span class="o">...</span>
         <span class="k">await</span> <span class="n">endpoint</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
         <span class="o">...</span>
     <span class="k">return</span> <span class="n">wrapper</span>
 </code></pre></div>
+
+
+<h3 id="_4">基于类的中间件</h3>
+<p>基于类的中间件可以继承 <code>indexpy.websocket.MiddlewareMixin</code>，有以下两个方法可以重写。</p>
+<ul>
+<li>
+<p><code>async def before_accept(self, websocket: WebSocket) -&gt; None</code></p>
+<p>此方法在 websocket 连接被接受前调用。</p>
+</li>
+<li>
+<p><code>async def after_close(self, websocket: WebSocket) -&gt; None</code></p>
+<p>此方法在 websocket 连接被关闭后调用。</p>
+</li>
+</ul>
+<p>同样的，<code>indexpy.websocket.MiddlewareMixin</code> 也有 <code>mounts</code> 属性用于挂在子中间件。</p>
                 
               
               
@@ -752,15 +781,15 @@
       
     </div>
     
-      <script src="../assets/javascripts/vendor.92ffa368.min.js"></script>
-      <script src="../assets/javascripts/bundle.5123e3d4.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c"}</script>
+      <script src="../assets/javascripts/vendor.d1f5a259.min.js"></script>
+      <script src="../assets/javascripts/bundle.f9edbbd5.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.a68abb33.min.js"
+            worker: "../assets/javascripts/worker/search.fae956e7.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>

@@ -13,7 +13,7 @@
       
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.0">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.5">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.b5d04df8.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.63b94e9e.min.css">
       
       
     
@@ -391,6 +391,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#path-parameters" class="md-nav__link">
+    Path Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#headers" class="md-nav__link">
     Headers
   </a>
@@ -747,6 +754,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#path-parameters" class="md-nav__link">
+    Path Parameters
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#headers" class="md-nav__link">
     Headers
   </a>
@@ -934,8 +948,7 @@
 </code></pre></div>
 
 
-<p>如果注册路由时使用了路径参数，则需要增加一个名为 <code>path</code> 的关键词参数，它将接受 <code>dict</code> 类型的对象，可以从中读取全部的路径参数。</p>
-<p>如果同时需要将一个 HTTP 处理器注册到多个路由中，并且存在有路由包含路径参数、有路由不包含路径参数，则需要为 <code>path</code> 参数增加默认值 <code>None</code>。</p>
+<p><code>@app.router.http</code> 装饰器将返回原始的函数，故而可以将同一个函数注册到多个路由下。</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">indexpy</span> <span class="kn">import</span> <span class="n">Index</span>
 
 <span class="n">app</span> <span class="o">=</span> <span class="n">Index</span><span class="p">()</span>
@@ -943,16 +956,16 @@
 
 <span class="nd">@app</span><span class="o">.</span><span class="n">router</span><span class="o">.</span><span class="n">http</span><span class="p">(</span><span class="s2">&quot;/hello&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;get&quot;</span><span class="p">)</span>
 <span class="nd">@app</span><span class="o">.</span><span class="n">router</span><span class="o">.</span><span class="n">http</span><span class="p">(</span><span class="s2">&quot;/hello/</span><span class="si">{name}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;get&quot;</span><span class="p">)</span>
-<span class="k">async</span> <span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">path</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;hello&quot;</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;hello </span><span class="si">{</span><span class="n">path</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">path_params</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;hello </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">path_params</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;hello&quot;</span>
 </code></pre></div>
 
 
 <h3 id="_2">类处理器</h3>
 <p>使用类处理多种请求十分简单。只需要继承 <code>indexpy.http.HTTPView</code> 并编写对应的方法，支持的方法有 <code>"get"</code>，<code>"post"</code>，<code>"put"</code>，<code>"patch"</code>，<code>"delete"</code>，<code>"head"</code>，<code>"options"</code>，<code>"trace"</code>。</p>
-<p>通过 <code>self.request</code> 可以读取此次请求的信息。并且与函数处理器相同，如果需要读取路径参数，应分别在各个函数里增加名为 <code>path</code> 的关键词参数。</p>
+<p>通过 <code>self.request</code> 可以读取此次请求的信息。</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">indexpy</span> <span class="kn">import</span> <span class="n">Index</span>
 <span class="kn">from</span> <span class="nn">indexpy.http</span> <span class="kn">import</span> <span class="n">HTTPView</span>
 
@@ -986,6 +999,8 @@
 <h3 id="url">URL</h3>
 <p>通过 <code>request.url</code> 可以获取到请求路径。该属性是一个类似于字符串的对象，它公开了可以从URL中解析出的所有组件。</p>
 <p>例如：<code>request.url.path</code>, <code>request.url.port</code>, <code>request.url.scheme</code></p>
+<h3 id="path-parameters">Path Parameters</h3>
+<p><code>request.path_params</code> 是一个字典，包含所有解析出的路径参数。</p>
 <h3 id="headers">Headers</h3>
 <p><code>request.headers</code> 是一个大小写无关的多值字典(multi-dict)。但通过 <code>request.headers.keys()</code>/<code>request.headers.items()</code> 取出来的 <code>key</code> 均为小写。</p>
 <h3 id="query-parameters">Query Parameters</h3>
@@ -1262,15 +1277,15 @@
       
     </div>
     
-      <script src="../assets/javascripts/vendor.92ffa368.min.js"></script>
-      <script src="../assets/javascripts/bundle.5123e3d4.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c"}</script>
+      <script src="../assets/javascripts/vendor.d1f5a259.min.js"></script>
+      <script src="../assets/javascripts/bundle.f9edbbd5.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c"}</script>
       
       <script>
         app = initialize({
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.a68abb33.min.js"
+            worker: "../assets/javascripts/worker/search.fae956e7.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
