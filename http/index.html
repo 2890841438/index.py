@@ -1054,7 +1054,7 @@
 <li><code>content_type: str</code>: 文件类型 (MIME type / media type) (例如 <code>image/jpeg</code>).</li>
 <li><code>file: tempfile.SpooledTemporaryFile</code>: 存储文件内容的临时文件（可以直接读写这个对象，但最好不要）。</li>
 </ul>
-<p><code>UploadFile</code> 还有四个异步方法（当文件在内存中时将直接进行操作，在磁盘时将使用多线程包裹原始文件的操作从而得到异步能力 <a href="https://github.com/encode/starlette/pull/933">starlette#933</a>）。</p>
+<p><code>UploadFile</code> 还有四个异步方法：</p>
 <ul>
 <li><code>async write(data: Union[str, bytes])</code>: 写入数据到文件中。</li>
 <li><code>async read(size: int)</code>: 从文件中读取数据。</li>
