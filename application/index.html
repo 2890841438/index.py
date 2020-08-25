@@ -599,7 +599,7 @@
 <p><strong><code>on_shutdown: typing.List[typing.Callable]</code></strong>：服务关闭前自动调用的函数列表；默认为空。</p>
 </li>
 <li>
-<p><strong><code>factory_class: typing.Dict</code></strong>：通过覆盖此参数，可以自定义整个 Index 中使用的 <code>Request</code> 类与 <code>WebSocket</code> 类。</p>
+<p><strong><code>factory_class: FactoryClass</code></strong>：通过覆盖此参数，可以自定义整个 Index 作用域中使用的 <code>Request</code> 类与 <code>WebSocket</code> 类。</p>
 </li>
 </ul>
 <h3 id="jinja_env"><code>jinja_env</code></h3>
