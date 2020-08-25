@@ -13,7 +13,7 @@
       
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.7">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.8">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.b8ac9624.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.01afc2df.min.css">
       
       
     
@@ -280,41 +280,34 @@
         
           <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
-    申明式注册
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
     路由对象
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     列表式注册
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     路径参数
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     注册多请求方法
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     反向查找
   </a>
   
@@ -334,21 +327,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     注册中间件
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
+  <a href="#_9" class="md-nav__link">
     子路由
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_11" class="md-nav__link">
+  <a href="#_10" class="md-nav__link">
     路由组合
   </a>
   
@@ -610,41 +603,34 @@
         
           <li class="md-nav__item">
   <a href="#_3" class="md-nav__link">
-    申明式注册
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
     路由对象
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_4" class="md-nav__link">
     列表式注册
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
+  <a href="#_5" class="md-nav__link">
     路径参数
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_6" class="md-nav__link">
     注册多请求方法
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     反向查找
   </a>
   
@@ -664,21 +650,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     注册中间件
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
+  <a href="#_9" class="md-nav__link">
     子路由
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#_11" class="md-nav__link">
+  <a href="#_10" class="md-nav__link">
     路由组合
   </a>
   
@@ -739,28 +725,8 @@
 <p class="admonition-title">Notice</p>
 <p>如果指定路由的 <code>name</code> 为 <code>None</code>，则无法通过 <code>name</code> 查找到该路由。</p>
 </div>
-<h3 id="_3">申明式注册</h3>
-<p>除了装饰器用法，你也可以采取申明式，这两种方法是等价的。</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">indexpy</span> <span class="kn">import</span> <span class="n">Index</span>
-
-<span class="n">app</span> <span class="o">=</span> <span class="n">Index</span><span class="p">()</span>
-
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="k">return</span> <span class="s2">&quot;hello world&quot;</span>
-
-
-<span class="k">async</span> <span class="k">def</span> <span class="nf">hello_ws</span><span class="p">(</span><span class="n">websocket</span><span class="p">):</span>
-    <span class="o">...</span>
-
-
-<span class="n">app</span><span class="o">.</span><span class="n">router</span><span class="o">.</span><span class="n">http</span><span class="p">(</span><span class="s2">&quot;/hello&quot;</span><span class="p">,</span> <span class="n">hello</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;get&quot;</span><span class="p">)</span>
-<span class="n">app</span><span class="o">.</span><span class="n">router</span><span class="o">.</span><span class="n">websocket</span><span class="p">(</span><span class="s2">&quot;/hello&quot;</span><span class="p">,</span> <span class="n">hello_ws</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;hello_ws&quot;</span><span class="p">)</span>
-</code></pre></div>
-
-
-<h3 id="_4">路由对象</h3>
-<p>事实上，如上两种路由申明方式都是如下方法的快捷方式</p>
+<h3 id="_3">路由对象</h3>
+<p>事实上，装饰器路由申明方式是如下方法的快捷方式</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">indexpy</span> <span class="kn">import</span> <span class="n">Index</span>
 <span class="kn">from</span> <span class="nn">indexpy.routing</span> <span class="kn">import</span> <span class="n">HttpRoute</span><span class="p">,</span> <span class="n">SocketRoute</span>
 
@@ -780,7 +746,7 @@
 </code></pre></div>
 
 
-<h3 id="_5">列表式注册</h3>
+<h3 id="_4">列表式注册</h3>
 <p>Index 同样支持类似于 Django 的列表式写法：</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">indexpy</span> <span class="kn">import</span> <span class="n">Index</span>
 <span class="kn">from</span> <span class="nn">indexpy.routing</span> <span class="kn">import</span> <span class="n">HttpRoute</span><span class="p">,</span> <span class="n">SocketRoute</span>
@@ -803,7 +769,7 @@
 </code></pre></div>
 
 
-<h3 id="_6">路径参数</h3>
+<h3 id="_5">路径参数</h3>
 <p>使用 <code>{name:type}</code> 可以标注路径参数，目前支持的类型有 <code>str</code>、<code>int</code>、<code>decimal</code>、<code>uuid</code> 和 <code>path</code>。</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -825,7 +791,7 @@
 </code></pre></div>
 
 
-<h3 id="_7">注册多请求方法</h3>
+<h3 id="_6">注册多请求方法</h3>
 <p>注册处理 HTTP 请求的可调用对象为函数时，必须标注允许处理的 HTTP 方法，且只允许一种。需要为同一个路由注册处理不同 HTTP 方法的可调用对象，应使用类，并继承自 <code>HTTPView</code>。以下为示例代码，需要更详细的描述，应查看 <a href="../http/#_2">HTTP</a> 章节。</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">indexpy</span> <span class="kn">import</span> <span class="n">Index</span>
 <span class="kn">from</span> <span class="nn">indexpy.http</span> <span class="kn">import</span> <span class="n">HTTPView</span>
@@ -853,7 +819,7 @@
 </code></pre></div>
 
 
-<h3 id="_8">反向查找</h3>
+<h3 id="_7">反向查找</h3>
 <p>某些情况下，需要由路由名称反向生成对应的 URL 值，可以使用 <code>app.router.url_for</code>。</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">indexpy</span> <span class="kn">import</span> <span class="n">Index</span>
 
@@ -863,7 +829,7 @@
 <span class="nd">@app</span><span class="o">.</span><span class="n">router</span><span class="o">.</span><span class="n">http</span><span class="p">(</span><span class="s2">&quot;/hello&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;get&quot;</span><span class="p">)</span>
 <span class="nd">@app</span><span class="o">.</span><span class="n">router</span><span class="o">.</span><span class="n">http</span><span class="p">(</span><span class="s2">&quot;/hello/</span><span class="si">{name}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;hello-name&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;get&quot;</span><span class="p">)</span>
 <span class="k">async</span> <span class="k">def</span> <span class="nf">hello</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;hello </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">path_params</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;hello </span><span class="si">{</span><span class="n">request</span><span class="o">.</span><span class="n">path_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
 
 
 <span class="k">assert</span> <span class="n">app</span><span class="o">.</span><span class="n">router</span><span class="o">.</span><span class="n">url_for</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;/hello&quot;</span>
@@ -877,7 +843,7 @@
 </div>
 <h2 id="routes">Routes</h2>
 <p>当需要把某一些路由归为一组时，可使用 <code>Routes</code> 对象。<code>Routes</code> 对象也拥有 <code>.http</code> 与 <code>.websocket</code> 方法，使用方法与 <code>app.router</code> 相同。</p>
-<p><code>Routes</code> 允许你使用类似于 Django 一样的路由申明方式，示例如下。</p>
+<p><code>Routes</code> 继承自 <code>typing.List</code>，所以它允许你使用类似于 Django 一样的路由申明方式，示例如下。</p>
 <div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">indexpy</span> <span class="kn">import</span> <span class="n">Index</span>
 <span class="kn">from</span> <span class="nn">indexpy.routing</span> <span class="kn">import</span> <span class="n">Routes</span><span class="p">,</span> <span class="n">HttpRoute</span>
 
@@ -900,7 +866,7 @@
 <p class="admonition-title">Notice</p>
 <p><strong>不要忘记</strong>使用 <code>app.router.extend(routes)</code> 将 <code>Routes</code> 对象注册进 <code>app.router</code> 中。</p>
 </div>
-<h3 id="_9">注册中间件</h3>
+<h3 id="_8">注册中间件</h3>
 <p>通过 <code>Routes</code> 你可以为整组路由注册一个或多个中间件。以下为简单的样例，关于中间件定义更详细的描述请查看<a href="../middleware/">中间件章节</a>。</p>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">http_only_print</span><span class="p">(</span><span class="n">endpoint</span><span class="p">):</span>
     <span class="k">async</span> <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
@@ -955,7 +921,7 @@
 </code></pre></div>
 
 
-<h3 id="_10">子路由</h3>
+<h3 id="_9">子路由</h3>
 <p><code>SubRoutes</code> 是 <code>Routes</code> 的子类，它允许你更简单的定义子路由，而不是在每个路由上增加一个前缀。它同样拥有 <code>Routes</code> 一样的路由注册方式与中间件注册方式。</p>
 <div class="codehilite"><pre><span></span><code><span class="n">subroutes</span> <span class="o">=</span> <span class="n">SubRoutes</span><span class="p">(</span>
     <span class="s2">&quot;/hello&quot;</span><span class="p">,</span>
@@ -967,7 +933,7 @@
 </code></pre></div>
 
 
-<h3 id="_11">路由组合</h3>
+<h3 id="_10">路由组合</h3>
 <p>通过使用 <code>Routes</code> 对象与 <code>SubRoutes</code> 对象，你可以任意的构建路由，却不会有任何运行时的损耗——一切嵌套路由都会在代码加载时被展开。</p>
 <div class="codehilite"><pre><span></span><code><span class="n">Routes</span><span class="p">(</span>
     <span class="n">HttpRoute</span><span class="p">(</span><span class="s2">&quot;/sayhi/</span><span class="si">{name}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="o">...</span><span class="p">),</span>
@@ -1046,8 +1012,8 @@
       
     </div>
     
-      <script src="../assets/javascripts/vendor.d1f5a259.min.js"></script>
-      <script src="../assets/javascripts/bundle.d5fec882.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c"}</script>
+      <script src="../assets/javascripts/vendor.df0def68.min.js"></script>
+      <script src="../assets/javascripts/bundle.ba57d267.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c"}</script>
       
       <script>
         app = initialize({
