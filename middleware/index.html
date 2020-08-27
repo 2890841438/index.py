@@ -13,7 +13,7 @@
       
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.8">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.9">
     
     
       
@@ -21,7 +21,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.01afc2df.min.css">
+      <link rel="stylesheet" href="../assets/stylesheets/main.36ee6aaa.min.css">
       
       
     
@@ -641,6 +641,10 @@
 </code></pre></div>
 
 
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code>endpoint</code> 是实际处理 HTTP 请求的可调用对象</p>
+</div>
 <h3 id="_2">基于类的中间件</h3>
 <p>基于类的中间件可以继承 <code>indexpy.http.MiddlewareMixin</code>，有以下三个方法可以重写。</p>
 <ul>
@@ -694,14 +698,18 @@
 <h3 id="_3">基于函数的中间件</h3>
 <p>编写一个 WebSocket 中间件与编写一个 HTTP 中间件很相似，不同的是 <code>websocket</code> 对应的 <code>endpoint</code> 对象不会有返回值。中间件的第二层函数也不需要返回结果，任何返回结果都是无效的。</p>
 <div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">middleware</span><span class="p">(</span><span class="n">endpoint</span><span class="p">):</span>
-    <span class="k">async</span> <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="n">websocket</span><span class="p">):</span>
         <span class="o">...</span>
-        <span class="k">await</span> <span class="n">endpoint</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+        <span class="k">await</span> <span class="n">endpoint</span><span class="p">(</span><span class="n">websocket</span><span class="p">)</span>
         <span class="o">...</span>
     <span class="k">return</span> <span class="n">wrapper</span>
 </code></pre></div>
 
 
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code>endpoint</code> 是实际处理 WebSocket 请求的可调用对象</p>
+</div>
 <h3 id="_4">基于类的中间件</h3>
 <p>基于类的中间件可以继承 <code>indexpy.websocket.MiddlewareMixin</code>，有以下两个方法可以重写。</p>
 <ul>
@@ -789,7 +797,7 @@
           base: "..",
           features: [],
           search: Object.assign({
-            worker: "../assets/javascripts/worker/search.fae956e7.min.js"
+            worker: "../assets/javascripts/worker/search.5eca75d3.min.js"
           }, typeof search !== "undefined" && search)
         })
       </script>
