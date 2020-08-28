@@ -523,6 +523,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#eventresponse" class="md-nav__link">
+    EventResponse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
     响应的简化写法
   </a>
@@ -886,6 +893,13 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#eventresponse" class="md-nav__link">
+    EventResponse
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
     响应的简化写法
   </a>
@@ -1121,6 +1135,30 @@
 <h3 id="yamlresponse">YAMLResponse</h3>
 <p>YAMLResponse 与 JSONResponse 的使用方法相同。</p>
 <p>唯一不同的是，一个返回 YAML 格式，一个返回 JSON 格式。</p>
+<h3 id="eventresponse">EventResponse</h3>
+<p>通过 <code>EventResponse</code> 可以返回一个 <a href="https://developer.mozilla.org/zh-CN/docs/Server-sent_events/Using_server-sent_events">Server Sent Events | MDN文档</a> 响应，这是一种 HTTP 长连接响应，可应用于服务器实时推送数据到客户端等场景。</p>
+<p><code>EventResponse</code> 除了可以接受诸如 <code>status_code</code>、<code>headers</code> 等常规参数外，还需要自行传入一个用于生成消息的异步生成器。传入的异步生成器 <code>yield</code> 的每一条消息都需要为合规的 Server-Sent Event 消息（<code>str</code> 类型），否则会出现不可预料的错误。</p>
+<p>如下是一个每隔一秒发送一条 hello 消息、一共发送一百零一条消息的样例。</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">asyncio</span>
+
+<span class="kn">from</span> <span class="nn">indexpy</span> <span class="kn">import</span> <span class="n">Index</span>
+<span class="kn">from</span> <span class="nn">indexpy.http.responses</span> <span class="kn">import</span> <span class="n">EventResponse</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Index</span><span class="p">()</span>
+
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">router</span><span class="o">.</span><span class="n">http</span><span class="p">(</span><span class="s2">&quot;/message&quot;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s2">&quot;get&quot;</span><span class="p">)</span>
+<span class="k">async</span> <span class="k">def</span> <span class="nf">message</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="nf">message_gen</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">101</span><span class="p">):</span>
+            <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="s2">&quot;event: message</span><span class="se">\r\n</span><span class="s2">data: {&#39;name&#39;: &#39;Aber&#39;, &#39;body&#39;: &#39;hello&#39;}&quot;</span>
+
+    <span class="k">return</span> <span class="n">EventResponse</span><span class="p">(</span><span class="n">message_gen</span><span class="p">())</span>
+</code></pre></div>
+
+
 <h3 id="_5">响应的简化写法</h3>
 <p>为了方便使用，Index 允许自定义一些函数来处理 <code>HTTP</code> 内返回的非 <code>Response</code> 对象。它的原理是拦截响应，通过响应值的类型来自动选择处理函数，把非 <code>Response</code> 对象转换为 <code>Response</code> 对象。</p>
 <p>Index 内置了三个处理函数用于处理六种类型：</p>
